@@ -1,0 +1,95 @@
+package window;
+
+import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JButton;
+import javax.swing.JTextField;
+
+import base.Comp.BaseFrame;
+import base.Comp.BaseLabel;
+import base.Comp.ImageLabel;
+
+public class SginFrom extends BaseFrame {
+
+	private ImageLabel img;
+	private ImageLabel imgCal;
+	private ImageLabel imgMik;
+	private JButton jbSig;
+	String[] str = "이름,생년월일,ID,PW".split(",");
+	JTextField[] jt = new JTextField[4];
+
+	public SginFrom(MainFrame mainFrame) {
+		// TODO Auto-generated constructor stub
+		super.setFrame("회원가입",439,378, mainFrame);
+	}
+
+	@Override
+	public void setComp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setDsign() {
+		// TODO Auto-generated method stub
+		jpM.setEmpty(10, 10, 10, 10);
+		jpT.addChild();
+		jpT.jpC.setFlowCenter().add(new BaseLabel("회원정보").setFont("맑은고딕", 30));
+		jpT.jpR.setEmpty(5, 5, 5, 5).add(img = new ImageLabel(null, "메인", 50, 50));
+		
+		jpC.addChild();
+		
+		for (int i = 0; i < str.length; i++) {
+			jpC.jpL.setGridLayout(4, 1, 20, 20).setEmpty(0, 50, 0, 10).add(new BaseLabel(str[i]));	
+			jpC.jpC.setGridLayout(4, 1, 20, 20).setEmpty(0, 0, 0, 5).add(jt[i] = new JTextField(15));
+		}
+		
+		jpC.jpR.setGridLayout(4, 1, 20, 20).setEmpty(0, 0, 0, 40).add(new BaseLabel(null));
+		jpC.jpR.add(imgCal = new ImageLabel(null, "달력", 30, 30));
+		jpC.jpR.setGridLayout(4, 1, 20, 20).setEmpty(0, 0, 0, 40).add(new BaseLabel(null));
+		jpC.jpR.add(imgMik = new ImageLabel(null, "마이크", 30, 30));
+		
+		jpB.setFlowCenter().setEmpty(30, 0, 0, 0).add(jbSig = new JButton("회원가입"));
+		jbSig.setPreferredSize(new Dimension(200,30));
+	}
+
+	@Override
+	public void setEvent() {
+		// TODO Auto-generated method stub
+		img.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				super.mouseClicked(e);
+				Close();
+			}
+		});
+		
+		imgMik.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				super.mouseClicked(e);
+				new MusicInfo(preFrame);
+			}
+		});
+		
+		imgMik.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				super.mouseClicked(e);
+				new Calender();
+			}
+		});
+		
+		jbSig.addActionListener(e -> {
+			String name = jt[0].getText().trim();
+			String birth = jt[1].getText().trim();
+			String id = jt[2].getText().trim();
+		});
+	}
+
+}

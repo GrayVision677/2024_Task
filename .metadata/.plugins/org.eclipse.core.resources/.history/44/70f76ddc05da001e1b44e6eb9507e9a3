@@ -1,0 +1,29 @@
+package window;
+
+import base.Comp.BaseFrame;
+
+public class SginFrom extends BaseFrame {
+
+	public SginFrom(MainFrame mainFrame) {
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void setComp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setDsign() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setEvent() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

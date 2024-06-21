@@ -1,0 +1,9 @@
+package window;
+
+public class LoginFrame {
+
+	public LoginFrame() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

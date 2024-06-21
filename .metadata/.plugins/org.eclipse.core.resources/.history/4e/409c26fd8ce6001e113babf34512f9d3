@@ -1,0 +1,224 @@
+package window;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
+import java.util.Random;
+import java.util.Vector;
+import java.util.regex.Pattern;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
+
+import base.BaseFrame;
+import base.BaseLabel;
+import jdbc.DbManager;
+import jdbc.Msg;
+
+public class SignFrom extends BaseFrame{
+	
+	String[] str = "이름,아이디,비밀번호,비밀번호확인,전화번호,인증번호 확인".split(",");
+	BaseLabel[]	bLStr = new BaseLabel[6];
+	JTextField[] jt = new JTextField[6];
+	BaseLabel[] bl = new BaseLabel[4];
+	private JButton jbGet;
+	private JButton jbYes;
+	private JComboBox jc;
+	private JTextField jtA;
+	private DbManager db;
+	private JButton jbsign;
+	private String st;
+	private int Sum = 0;
+	private int Mum = 0;
+
+	public SignFrom(BaseFrame preFrame) {
+		// TODO Auto-generated constructor stubs
+		super.setFrame("회원가입", 447,450, preFrame);
+	}
+
+	@Override
+	public void setComp() {
+		// TODO Auto-generated method stub
+		db = new DbManager();
+	}
+
+	@Override
+	public void setDsign() {
+		// TODO Auto-generated method stub
+		jpM.setEmpty(10, 10, 10, 10);
+		jpT.setFlowCenter().add(new BaseLabel("회원가입").setFont("맑은고딕", 30));
+		jpC.addChild();
+		for (int i = 0; i < str.length; i++) {
+			jpC.jpL.setGridLayout(6, 1, 10, 10).setEmpty(0, 0, 0, 20).add(bLStr[i] = new BaseLabel(str[i]));
+		}
+		
+		for (int i = 0; i < str.length; i++) {
+			jpC.jpC.setGridLayout(6, 1, 10,10).setEmpty(0, 0, 0, 10).add(jt[i] = new JTextField(15));
+		}
+		
+		for (int i = 0; i <= 3; i++) {
+			jpC.jpR.setGridLayout(6, 1, 10, 10).add(bl[i] = new BaseLabel(""));
+		}
+		jpC.jpR.add(jbGet = new JButton("인증번호 받기"));
+		jpC.jpR.add(jbYes = new JButton("확인"));
+		
+		Color color = new Color(178,221,239);
+		
+		jpB.addChild();
+		jpB.jpC.setGridLayout(2, 1, 10, 10).setEmpty(10, 0, 0, 120).add(jc = new JComboBox<>());
+		jpB.jpC.add(jtA = new JTextField(15));
+		jtA.setText("본인확인 질문 답변");
+		jtA.setForeground(Color.gray);
+		
+		Vector<Vector<String>> data = db.getDb("SELECT * FROM auction.question;");
+		
+		jc.addItem("");
+		for (int i = 0; i < data.size(); i++) {
+			jc.addItem(data.get(i).get(1));
+		}
+		
+		
+		if(jtA.getText().trim() == null) {
+			jtA.setText("본인확인 질문 답변");
+			jtA.setForeground(Color.gray);
+		}
+		
+		jpB.jpB.setFlowCenter().add(jbsign = new JButton("회원가입"));
+		jbsign.setPreferredSize(new Dimension(150,30));
+	}
+
+	@Override
+	public void setEvent() {
+		// TODO Auto-generated method stub
+		jtA.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				super.mouseClicked(e);
+				jtA.setText("");
+				jtA.setForeground(Color.black);
+			}
+		});
+		
+		super.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				super.mouseClicked(e);
+				String jt = jtA.getText().trim();
+				
+				if(jt.isBlank()) {
+					jtA.setText("본인확인 질문 답변");
+					jtA.setForeground(Color.gray);
+				}
+			}
+		});
+		
+		jbGet.addActionListener(e -> {
+			//"-"으로 나눠서(배열) 전화번호 형식 지키기
+			String Get[] = jt[4].getText().split("-");
+			
+			if(jt[4].getText().trim().isBlank()) {
+				Msg.error("전화번호를 입력하세요.");
+				return;
+			}
+			
+			//숫자와 전화번호 길이 4개와 숫자 판별
+			String num = "^([0-9]+)$";
+			if(!Get[0].equals("010") || Get[1].length() != 4 || Get[2].length() != 4 || !Pattern.matches(num, Get[1]) || !Pattern.matches(num, Get[2])) {
+				Msg.error("전화번호 형식을 확인해주세요.");
+				return;
+			}
+			
+			//인증번호 랜덤 함수 써서 호출
+			Random random = new Random();
+			DecimalFormat dFormat = new DecimalFormat("0000");
+			st = dFormat.format(random.nextInt(9999));
+			Msg.info("인증번호는 " + st + "입니다.");
+			
+			Sum  = 1;
+		});
+		
+		jbYes.addActionListener(e -> {
+			String Num = jt[5].getText().trim();
+			
+			if(!Num.equals(st)) {
+				Msg.error("올바르지 않는 인증번호 입니다.");
+				return;
+			}
+			
+			if(Sum != 1) {
+				Msg.error("인증번호 받기를 먼저 눌러주세요");
+				return;
+			}
+			
+			Msg.info("인증되었습니다.");
+			Mum  = 1;
+		});
+		
+		jbsign.addActionListener(e -> {
+			String name = jt[0].getText().trim();
+			String id = jt[1].getText().trim();
+			String pw = jt[2].getText().trim();
+			String pwRe = jt[3].getText().trim();
+			String[] Phone = jt[4].getText().split("-");
+			String Num = jt[5].getText().trim();
+			int Select = jc.getSelectedIndex();
+			
+			
+			if(name.isBlank() || id.isBlank() || pw.isBlank() || Phone.length + "" == null || Num.isBlank() || jc.getSelectedIndex() == 0 || jtA.equals("본인확인 질문 답변") || jtA.getText().trim().isBlank()) {
+				Msg.error("빈칸이 있습니다.");
+				return;
+			}
+			
+			Vector<Vector<String>> data = db.getDb("SELECT * FROM auction.user where u_id = ?;",id);
+			
+			if(data.size() != 0) {
+				Msg.error("아이다가 중복되었습니다.");
+				return;
+			}
+			
+			String spc = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%]).{10,25}$";
+			String pwKr = "^([ㄱ-힣-ㅣ-가-힣].+)$";
+			String loop = "^.*(.)\\1{2,}.*$";
+			if(!Pattern.matches(spc, pw) || Pattern.matches(pwKr, pw) || Pattern.matches(loop, pw)) {
+				Msg.error("비밀번호 형식을 확인해주세요.");
+				return;
+			}
+			
+			if(pw.contains(Phone[1]) || pw.contains(Phone[2]) || pw.contains(id)) {
+				Msg.error("비밀번호 형식을 확인해주세요.");
+				return;
+			}
+			
+			if(!pwRe.equals(pw)) {
+				Msg.error("비밀번호 확인이 일치하지 않습니다.");
+				System.out.println(pw);
+				System.out.println(pwRe);
+				return;
+			}
+			
+			if(jc.getSelectedIndex() == 0) {
+				Msg.error("본인확인 질문을 선택 해주세요.");
+				return;
+			}
+			
+			if(Mum != 1) {
+				Msg.error("인증을 완료해주세요.");
+				return;
+			}
+			
+			Msg.info("회원가입이 완료되었습니다.");
+			db.setDb("INSERT INTO `auction`.`user` (`u_id`, `u_pw`, `q_no`, `u_answer`) VALUES (?, ?, ?, ?);\r\n"
+					,id,pw,Select,jtA.getText().trim());
+			Close();
+		});
+		
+		
+		
+	}
+
+}

@@ -1,0 +1,75 @@
+package window;
+
+import java.awt.Dimension;
+import java.util.Vector;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+
+import ResModel.ImgModelData;
+import base.Comp.BaseFrame;
+import base.Comp.BaseLabel;
+import base.Comp.ImageLabel;
+import jdbc.DbManager;
+
+public class MainFrame extends BaseFrame {
+	
+	String[] str = "로그인,회원가입,음원검색,마이페이지,분석".split(",");
+	JButton[] jb = new JButton[5];
+	private JScrollPane jsp;
+	private DbManager db;
+
+	public MainFrame() {
+		// TODO Auto-generated constructor stub
+		setFrame("메인", 786,544, null);
+	}
+
+	@Override
+	public void setComp() {
+		// TODO Auto-generated method stub
+		db = new DbManager();
+		jsp = new JScrollPane();
+		
+	}
+
+	@Override
+	public void setDsign() {
+		// TODO Auto-generated method stub
+		jpT.setFlowCenter().setEmpty(0, 0, 20, 0).add(new BaseLabel("SKILL MUSIC(OLD POP SONG)").setFont("맑은고딕", 25));
+		jpC.addChild();
+		for (int i = 0; i < str.length; i++) {
+			jpC.jpT.setGridLayout(1, 5, 10, 10).setEmpty(10, 0, 0, 10).add(jb[i] = new JButton(str[i]));
+			jb[i].setPreferredSize(new Dimension(50,50));
+		}
+		
+		Vector<Vector<String>> musicData = db.getDb("SELECT * FROM oldpopsong.music;");
+		for (int i = 0; i < musicData.size(); i++) {
+			String m_no = musicData.get(i).get(0);
+			ImgModelData allData = db.getImg("SELECT * FROM oldpopsong.playlist as p join oldpopsong.music as m\r\n"
+					+ "on p.m_no = m.m_no\r\n"
+					+ "where m_no like ?;",12,m_no);
+
+			Vector<Vector<String>> datas = allData.datas;
+			Vector<ImageIcon> icons = allData.icons;
+			
+			jpC.jpC.setGridLayout(5, 0, 10, 10);
+			for (int j = 1; j <= 99; i++) {
+				jsp.add(new ImageLabel(null, icons.get(j), 100, 100));
+			}
+		}
+		
+		jpC.jpC.add(jsp);
+		
+		jb[2].setEnabled(false);
+		jb[3].setEnabled(false);
+		
+	}
+
+	@Override
+	public void setEvent() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

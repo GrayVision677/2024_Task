@@ -1,0 +1,33 @@
+package window;
+
+import base.Comp.BaseFrame;
+import base.Comp.BaseLabel;
+
+public class SginFrom extends BaseFrame {
+
+	public SginFrom(MainFrame mainFrame) {
+		// TODO Auto-generated constructor stub
+		super.setFrame("회원가입", 500, 400, mainFrame);
+	}
+
+	@Override
+	public void setComp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setDsign() {
+		// TODO Auto-generated method stub
+		jpM.setEmpty(10, 10, 10, 10);
+		jpT.addChild();
+		jpT.jpC.add(new BaseLabel("회원정보"));
+	}
+
+	@Override
+	public void setEvent() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
