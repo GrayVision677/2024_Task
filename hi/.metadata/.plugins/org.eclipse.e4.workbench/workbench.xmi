@@ -188,13 +188,13 @@
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view>&#xD;&#xA;&lt;presentation currentPage=&quot;qroot&quot; restore=&quot;true&quot;/>&#xD;&#xA;&lt;standbyPart/>&#xD;&#xA;&lt;/view>"/>
       <tags>View</tags>
       <tags>categoryTag:General</tags>
-      <tags>active</tags>
       <tags>activeOnClose</tags>
+      <tags>active</tags>
       <menus xmi:id="_CmdhEOyaEe6MT8YZJoZb7Q" elementId="org.eclipse.ui.internal.introview">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
       </menus>
-      <toolbar xmi:id="_CmdhEeyaEe6MT8YZJoZb7Q" elementId="org.eclipse.ui.internal.introview"/>
+      <toolbar xmi:id="_CmdhEeyaEe6MT8YZJoZb7Q" elementId="org.eclipse.ui.internal.introview" visible="false"/>
     </sharedElements>
     <sharedElements xsi:type="basic:Part" xmi:id="_BorqMeyaEe6MT8YZJoZb7Q" elementId="org.eclipse.ui.cheatsheets.views.CheatSheetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Cheat Sheets" iconURI="platform:/plugin/org.eclipse.ui.cheatsheets/icons/view16/cheatsheet_view.png" tooltip="" closeable="true">
       <persistedState key="originalCompatibilityViewClass" value="org.eclipse.ui.internal.cheatsheets.views.CheatSheetView"/>
@@ -335,7 +335,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_BzM4IOyaEe6MT8YZJoZb7Q" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_BzQigOyaEe6MT8YZJoZb7Q" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_A4j05uyaEe6MT8YZJoZb7Q"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_m3NAgGBwEe-ekun6lR_UNQ" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_A4j05uyaEe6MT8YZJoZb7Q"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_BzM4IeyaEe6MT8YZJoZb7Q" elementId="group.edit" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -363,7 +363,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_BzNfMOyaEe6MT8YZJoZb7Q" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_BzRJleyaEe6MT8YZJoZb7Q" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" enabled="false" type="Check" command="_A4imweyaEe6MT8YZJoZb7Q"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_m3PcwGBwEe-ekun6lR_UNQ" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" enabled="false" type="Check" command="_A4imweyaEe6MT8YZJoZb7Q"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_BzNfMeyaEe6MT8YZJoZb7Q" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
